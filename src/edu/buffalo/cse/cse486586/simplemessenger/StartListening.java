@@ -19,7 +19,19 @@ public class StartListening implements Runnable {
 	
 	@Override
 	public void run() {
-		
+		boolean isConnected= false;
+		while(!isConnected) {
+			try {
+				Socket sock1= servSocket.accept();
+				isConnected= true;
+				AcceptStream as= new AcceptStream(sock1);
+				Thread t2= new Thread((Runnable) as);
+				t2.start();
+			} catch (IOException e) {
+				e.printStackTrace();
+				Log.e(ERRORTAG, ""+e.getMessage());
+			}
+		}
 	}
 
 }

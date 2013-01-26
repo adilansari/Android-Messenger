@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnKeyListener;
+import android.widget.*;
 
 public class MainActivity extends Activity {
 
@@ -44,6 +48,19 @@ public class MainActivity extends Activity {
         StartListening sl= new StartListening(recvPort);
         Thread t1= new Thread((Runnable) sl);
         t1.start();
+        
+        //now just create a thread to send a message
+        final EditText editText= (EditText) findViewById(R.id.editText1);
+		
+        editText.setOnKeyListener(new OnKeyListener(){
+
+			@Override
+			public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
+				// send message method call here
+				return false;
+			}
+        	
+        });
     }
 
     @Override
@@ -62,5 +79,11 @@ public class MainActivity extends Activity {
     	TelephonyManager tel = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
     	String portStr = tel.getLine1Number().substring(tel.getLine1Number().length() - 4);
     	return portStr;
+    }
+    
+    public void updateTextView(String msg) {
+    	TextView textView = (TextView)findViewById(R.id.textView1);
+    	textView.append(msg);
+    	textView.setMovementMethod(ScrollingMovementMethod.getInstance());
     }
 }
