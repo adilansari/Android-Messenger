@@ -3,7 +3,7 @@ package edu.buffalo.cse.cse486586.simplemessenger;
 import java.io.*;
 import java.net.*;
 
-public class AcceptStream implements Runnable {
+public class AcceptStream extends MainActivity implements Runnable {
 	
 	Socket sock;
 	
@@ -19,7 +19,7 @@ public class AcceptStream implements Runnable {
 				din = new DataInputStream(sock.getInputStream()); 
 				String str= din.readUTF();
 				//find a way to sort out this matter to update text view by calling a method of mainactivity
-				MainActivity.this.updateTextView(str);
+				updateTextView("recvd: " + str);
 				din.close();
 			}
 			catch (IOException e) {

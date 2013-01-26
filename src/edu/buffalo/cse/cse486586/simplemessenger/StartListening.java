@@ -4,10 +4,12 @@ import java.io.*;
 import java.net.*;
 import android.util.Log;
 
-public class StartListening implements Runnable {
+public class StartListening extends MainActivity implements Runnable {
 	
-	static final String ERRORTAG= "Adil error";
-	ServerSocket servSocket= null;
+	static final String ERRORTAG= "Adil SL-error";
+	ServerSocket servSocket;
+	Socket sock1= null;
+	DataInputStream din= null;
 	
 	StartListening(int tcpPort) {
 		try {
@@ -19,19 +21,35 @@ public class StartListening implements Runnable {
 	
 	@Override
 	public void run() {
-		boolean isConnected= false;
-		while(!isConnected) {
+		while(true) {
 			try {
-				Socket sock1= servSocket.accept();
-				isConnected= true;
-				AcceptStream as= new AcceptStream(sock1);
-				Thread t2= new Thread((Runnable) as);
-				t2.start();
-			} catch (IOException e) {
+				sock1= servSocket.accept();
+				din = new DataInputStream(sock1.getInputStream());
+				String str= din.readUTF();
+				updateTextView("recvd: " + str);
+				} 
+			
+			catch (IOException e) {
 				e.printStackTrace();
 				Log.e(ERRORTAG, ""+e.getMessage());
 			}
+			
+			finally {
+				if (din!= null)
+					try {
+						din.close();
+					} catch (IOException e) {
+						Log.e(ERRORTAG, ""+e.getMessage());
+						e.printStackTrace();
+					}
+				if(sock1!=null)
+					try {
+						sock1.close();
+					} catch (IOException e) {
+						Log.e(ERRORTAG, ""+e.getMessage());
+						e.printStackTrace();
+					}	
+			}
 		}
 	}
-
 }
