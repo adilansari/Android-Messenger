@@ -174,10 +174,12 @@ public class MainActivity extends Activity {
     	uiHandle.post(new Runnable() {
     		public void run() {
     			TextView textView = (TextView)findViewById(R.id.textView1);
+    			textView.setMovementMethod(new ScrollingMovementMethod());
     	    	Log.v(TAG, "updating textview");
-    	    	textView.append(msg);
+    	    	textView.append(msg+"\n");
     	    	Log.v(TAG, "updated textview");
-    	    	textView.setMovementMethod(ScrollingMovementMethod.getInstance());
+    	    	ScrollView sc= (ScrollView)findViewById(R.id.scrollView1);
+    	    	sc.fullScroll(View.FOCUS_DOWN);
     		}
     	});
     }
