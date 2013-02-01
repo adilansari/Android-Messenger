@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
+import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -49,10 +50,6 @@ public class MainActivity extends Activity {
 			}        	
         }).start();
         
-        //start listener thread in another program
-        /*StartListening sl= new StartListening(recvPort);
-        Thread t1= new Thread((Runnable) sl);
-        t1.start();*/
         
         //listener embedded in this class only
         new Thread(new Runnable() {
@@ -72,11 +69,10 @@ public class MainActivity extends Activity {
         			try {
         				sock1= servSocket.accept();
         				Log.v(TAG, "sock1: "+sock1.getInetAddress().getHostAddress()+sock1.isConnected()+Integer.toString(sock1.getLocalPort())+Integer.toString(sock1.getPort()));
-        				//din = new DataInputStream(sock1.getInputStream());
         				BufferedReader br= new BufferedReader(new InputStreamReader(sock1.getInputStream()));
         				String str= br.readLine();
         				Log.v(TAG, "recvd msg: "+str);
-        				updateTextView("recvd: "+str);
+        				updateTextView("<font color=\"#0000A0\"> <b>Rcvd: </b></font>"+str);
         				} 
         			
         			catch (IOException e) {
@@ -111,7 +107,10 @@ public class MainActivity extends Activity {
         editText.setOnKeyListener(new OnKeyListener(){
 
 			@Override
-			public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
+			public boolean onKey(View arg0, int keyCode, KeyEvent event) {
+				if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+					sendMessage(arg0);
+				}
 				return false;
 			}
         	
@@ -128,8 +127,7 @@ public class MainActivity extends Activity {
     public void sendMessage(View view) {
     	EditText et= (EditText) findViewById(R.id.editText1);
     	final String msg= et.getText().toString();
-    	//updateTextView("sent: " + msg);
-    	
+    	et.setText("");
     	new Thread(new Runnable() {
     		public void run() {
     			Socket sock= null;
@@ -147,7 +145,7 @@ public class MainActivity extends Activity {
     			try {
     				PrintWriter out= new PrintWriter(sock.getOutputStream(),true);
     				out.println(msg);
-    				updateTextView("sent: " + msg);
+    				updateTextView("<font color=\"#800000\"> <b>Sent: </b></font>" + msg);
     				}
     				catch (IOException e) {
     					Log.v(ERRORTAG, ""+e.getMessage());
@@ -156,10 +154,6 @@ public class MainActivity extends Activity {
     		}
     		
     	}).start();
-    	
-    	/*SendStream ss= new SendStream(ipAddr, sendPort, msg);
-    	Thread t3= new Thread((Runnable) ss);
-    	t3.start();*/
     }
     
     //get port number
@@ -176,7 +170,9 @@ public class MainActivity extends Activity {
     			TextView textView = (TextView)findViewById(R.id.textView1);
     			textView.setMovementMethod(new ScrollingMovementMethod());
     	    	Log.v(TAG, "updating textview");
-    	    	textView.append(msg+"\n");
+    	    	//textView.append(msg+"\n");
+    	    	textView.append(Html.fromHtml(msg));
+    	    	textView.append("\n");
     	    	Log.v(TAG, "updated textview");
     	    	ScrollView sc= (ScrollView)findViewById(R.id.scrollView1);
     	    	sc.fullScroll(View.FOCUS_DOWN);
