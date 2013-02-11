@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640" />
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen"/>
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)"/>
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>Android-messenger by adilansari</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/adilansari/Android-Messenger">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Android-messenger</h1>
+            <h2>Simple android messenger application.</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/adilansari/Android-Messenger/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/adilansari/Android-Messenger/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <h1>The goal of this app is simple: enabling two Android devices to send messages to each other.</h1>
+
+<p>There is only one text box on screen where a user of the device can write a text message to the other device.</p>
+
+<p>The other device should be able to display on screen what was received. And vice versa. Used Java Socket API. All communication over TCP. Assumed that the size of a message will never exceed 128 bytes (characters).</p>
+
+<p>In the app, we can open only one server socket that listens on port 10000 regardless of which AVD your app runs on.</p>
+
+<p>The app on avd0 can connect to the listening server socket of the app on avd1 by connecting to : == 10.0.2.2:11112.</p>
+
+<p>The app on avd1 can connect to the listening server socket of the app on avd0 by connecting to : == 10.0.2.2:11108.</p>
+
+<h2>References</h2>
+
+<p>[1] More project details <a href="https://docs.google.com/document/d/1JqBqZChFWzbnTXgbYB8Z6l9IRlzt8c0loIwa6ymkPps/pub">here</a></p>
+
+<p>[2] Single best resource on Android, <a href="http://developer.android.com">Android dev</a></p>
+
+<h2>Screenshots</h2>
+
+<p>Product demo:</p>
+
+<p><img src="https://raw.github.com/adilansari/Android-Messenger/master/screen/Emulator-1.png" alt="Emulator-1"></p>
+
+<p><img src="https://raw.github.com/adilansari/Android-Messenger/master/screen/Emulator-2.png" alt="Emulator-2"></p>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/adilansari">adilansari</a> can be found on <a href="https://github.com/adilansari/Android-Messenger">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
